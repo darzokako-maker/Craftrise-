@@ -65,7 +65,8 @@ def main():
         input("\n[!] Cikmak icin Enter'a basin...")
         sys.exit(1)
 
-    classes, offsets = load_mappings()
+    atapiro_anim("[*] auto-mapping JVM classes & offsets...", 6)
+    classes, offsets = load_mappings(pid=pid)
     atapiro_anim("[+] loaded class mappings and struct offsets", 6, FOREGROUND_GREEN | FOREGROUND_INTENSITY)
 
     klass_player = classes["EntityPlayerSP"]
