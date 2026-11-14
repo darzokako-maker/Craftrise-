@@ -23,11 +23,11 @@ jobs:
 
       - name: Fix imports and check syntax
         run: |
-          python -c "import glob, json, re; json.load(open('Mappings.json', encoding='utf-8')); pats = [(r'from\s+src\.(core|gui|modules|mapper)\.', 'from '), (r'from\s+\.\.(core|gui|modules|mapper)\.', 'from '), (r'from\s+\.([a-zA-Z_][a-zA-Z0-9_]*)\s+import', r'from \1 import')]; [open(p, 'w', encoding='utf-8').write(re.sub(pats[2][0], pats[2][1], re.sub(pats[1][0], pats[1][1], re.sub(pats[0][0], pats[0][1], open(p, encoding='utf-8').read())))) for p in glob.glob('*.py')]"
+          python -c "import glob, re; pats = [(r'from\s+src\.(core|gui|modules|mapper)\.', 'from '), (r'from\s+\.\.(core|gui|modules|mapper)\.', 'from '), (r'from\s+\.([a-zA-Z_][a-zA-Z0-9_]*)\s+import', r'from \1 import')]; [open(p, 'w', encoding='utf-8').write(re.sub(pats[2][0], pats[2][1], re.sub(pats[1][0], pats[1][1], re.sub(pats[0][0], pats[0][1], open(p, encoding='utf-8').read())))) for p in glob.glob('*.py')]"
           python -m compileall -q .
 
       - name: Build EXE
-        run: pyinstaller --noconfirm --onefile --console --name "atapiro-1337" --paths "." --add-data "Mappings.json;." --hidden-import "jvm_reader" main.py
+        run: pyinstaller --noconfirm --onefile --console --name "atapiro-1337" --paths "." --hidden-import "jvm_reader" --hidden-import "class_solver" --hidden-import "member_solver" main.py
 
       - uses: actions/upload-artifact@v4
         with:
