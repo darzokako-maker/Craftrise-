@@ -51,21 +51,4 @@ jobs:
                       f.write(new_txt)
                   print(f"Fixed imports in {path}")
 
-      - name: Syntax check
-        run: python -m compileall -q .
-
-      - name: Build EXE with PyInstaller
-        run: |
-          pyinstaller --noconfirm --onefile --console ^
-            --name "atapiro-1337" ^
-            --paths "." ^
-            --add-data "Mappings.json;." ^
-            --hidden-import "jvm_reader" ^
-            main.py
-
-      - name: Upload EXE artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: atapiro-1337-exe
-          path: dist/atapiro-1337.exe
-          if-no-files-found: error
+      - name:
